@@ -28,6 +28,9 @@ from app.shop_safety import REFUSE_INJECTION, REFUSE_OFF_TOPIC, check, extract_f
 from app.shop_tools import CUSTOMER_TOOLS, SHOP_TOOLS, ShopContext, memory_namespace
 
 HISTORY_TURNS = 8      # short-term window sent to the model (keeps tokens low)
+# Save the conversation to Postgres once per turn (and at an interrupt) instead of after every node:
+# far fewer database round trips = faster replies. Short-term memory still survives restarts.
+DURABILITY = "exit"
 MAX_TOKENS = 450
 
 SYSTEM_PROMPT = """You are ShopBot, the sales assistant of TechTokri, a small online gadget shop in Pakistan (prices in PKR).
@@ -173,9 +176,9 @@ def chat(graph, user_id: str, thread_id: str, message: str, role: str = "custome
     before = graph.get_state(config)
     since = len(before.values.get("messages", [])) if before.values else 0
     if before.interrupts:
-        result = graph.invoke(Command(resume=message), config, context=ctx)
+        result = graph.invoke(Command(resume=message), config, context=ctx, durability=DURABILITY)
     else:
-        result = graph.invoke({"messages": [HumanMessage(message)]}, config, context=ctx)
+        result = graph.invoke({"messages": [HumanMessage(message)]}, config, context=ctx, durability=DURABILITY)
     return turn_summary(result, since)
 
 

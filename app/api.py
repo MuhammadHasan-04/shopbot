@@ -21,6 +21,7 @@ import time
 from contextlib import asynccontextmanager
 from typing import Any
 
+import psycopg
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -52,9 +53,11 @@ def _open_memory():
     from langgraph.checkpoint.postgres import PostgresSaver
     from langgraph.store.postgres import PostgresStore
     from psycopg_pool import ConnectionPool
-    pool = ConnectionPool(DATABASE_URL, min_size=1, max_size=8, open=True, timeout=20,
-                          kwargs={"autocommit": True, "prepare_threshold": None},
-                          check=ConnectionPool.check_connection)   # hosted Postgres closes idle connections
+    # No per-checkout health query (each one is a network round trip): instead keep connections alive with
+    # TCP keepalives, retire them before the server's idle timeout, and retry a turn once if one was dropped.
+    pool = ConnectionPool(DATABASE_URL, min_size=2, max_size=8, open=True, timeout=20, max_idle=120, max_lifetime=900,
+                          kwargs={"autocommit": True, "prepare_threshold": None, "keepalives": 1,
+                                  "keepalives_idle": 30, "keepalives_interval": 10, "keepalives_count": 3})
     saver, store = PostgresSaver(pool), PostgresStore(pool)
     saver.setup()
     store.setup()
@@ -126,7 +129,11 @@ def chat(body: ChatIn):
         return {"reply": "Hi! What can I help you find today?", **empty}
     try:
         with _lock(f"{user_id}::{thread_id}"):
-            result = run_chat(STATE["graph"], user_id, thread_id, message)
+            try:
+                result = run_chat(STATE["graph"], user_id, thread_id, message)
+            except psycopg.OperationalError:          # a dropped DB connection: the pool replaces it, retry once
+                log.warning("database connection dropped, retrying turn once")
+                result = run_chat(STATE["graph"], user_id, thread_id, message)
     except Exception as e:
         log.exception("chat failed")
         busy = any(w in str(e).lower() for w in ("overloaded", "rate", "credit", "billing", "timeout"))
