@@ -207,10 +207,14 @@ def search_products(runtime: ToolRuntime[ShopContext], query: str = "", category
     category: audio, charging, phone accessories, wearables, smart home, laptop accessories.
     max_price in PKR (0 = no limit)."""
     found = find_products(runtime.store, query, category, max_price)
+    note = ""
+    if not found and (category or max_price):
+        found = find_products(runtime.store, "", category, max_price)          # same filters, any keyword
+        note = "No exact keyword match. Closest items within your filters:\n"
     if not found:
-        return "No matching products. Try fewer words or a higher budget."
-    return "\n".join(f"{p['id']} | {p['name']} | {pkr(p['price'])} | "
-                     f"{'in stock' if p['stock'] else 'OUT OF STOCK'} | {p['description']}" for p in found)
+        return "No matching products in our catalogue. Try simpler words, another category or a higher budget."
+    return note + "\n".join(f"{p['id']} | {p['name']} | {pkr(p['price'])} | "
+                            f"{'in stock' if p['stock'] else 'OUT OF STOCK'} | {p['description']}" for p in found)
 
 
 @tool

@@ -143,7 +143,9 @@ def chat(body: ChatIn):
     log.info("chat user=%s thread=%s tools=%s tokens=%s %dms", user_id, thread_id,
              [c["name"] for c in result["tool_calls"]], result["tokens"], latency)
     blocked = result.pop("blocked", None)
-    _log_turn(user_id, thread_id, message, {**result, "blocked": blocked}, latency)
+    # dashboard log is written in the background: the customer doesn't wait for it
+    threading.Thread(target=_log_turn, args=(user_id, thread_id, message, {**result, "blocked": blocked}, latency),
+                     daemon=True).start()
     return result      # exactly {"reply", "tool_calls", "tokens"}
 
 
@@ -328,6 +330,35 @@ def admin_product_save(p: ProductIn, pid: str = ""):
     key = (pid or p.id or "NEW-" + secrets.token_hex(2)).upper()
     STATE["store"].put(shop.CATALOG_NS, key, {**p.model_dump(), "id": key, "category": p.category.lower()})
     return {"ok": True, "id": key}
+
+
+class ImportIn(BaseModel):
+    csv: str
+
+
+@app.post("/admin/products/import", dependencies=[Depends(admin)])
+def admin_products_import(body: ImportIn):
+    """Seller uploads a catalogue as CSV: id,name,category,price,stock,description,tags (header row required).
+    New ids are added, existing ids are updated. Returns how many rows were saved and any row errors."""
+    import csv
+    import io
+    store, saved, errors = STATE["store"], 0, []
+    for n, row in enumerate(csv.DictReader(io.StringIO(body.csv.strip())), start=2):
+        try:
+            row = {k.strip().lower(): (v or "").strip() for k, v in row.items() if k}
+            pid = (row.get("id") or "").upper() or "NEW-" + secrets.token_hex(2).upper()
+            old = (store.get(shop.CATALOG_NS, pid).value if store.get(shop.CATALOG_NS, pid) else {})
+            item = {"id": pid, "name": row["name"], "category": row.get("category", "other").lower() or "other",
+                    "price": int(float(row["price"])), "stock": int(float(row.get("stock") or 0)),
+                    "description": row.get("description", ""), "tags": row.get("tags", ""),
+                    "image": row.get("image") or old.get("image", "📦"), "active": True}
+            if not item["name"] or item["price"] < 0:
+                raise ValueError("name and a price >= 0 are required")
+            store.put(shop.CATALOG_NS, pid, item)
+            saved += 1
+        except Exception as e:
+            errors.append(f"row {n}: {e}")
+    return {"saved": saved, "errors": errors[:20]}
 
 
 @app.get("/admin/customers", dependencies=[Depends(admin)])

@@ -97,6 +97,14 @@ const EMPTY = { id: "", name: "", category: "audio", price: 0, stock: 0, descrip
 function ProductsTab({ token }) {
   const [rows, load] = useData("/admin/products", token);
   const [edit, setEdit] = useState(null);
+  const [csvOpen, setCsvOpen] = useState(false);
+  const [csv, setCsv] = useState("");
+  const [csvMsg, setCsvMsg] = useState("");
+  async function importCsv() {
+    const r = await adminFetch("/admin/products/import", token, { method: "POST", body: JSON.stringify({ csv }) });
+    setCsvMsg(`Saved ${r.saved} product(s)` + (r.errors?.length ? ` · ${r.errors.length} error(s): ${r.errors.join("; ")}` : ""));
+    if (r.saved) { setCsv(""); load(); }
+  }
   async function save() {
     const body = JSON.stringify({ ...edit, price: +edit.price, stock: +edit.stock });
     if (edit._new) await adminFetch("/admin/products", token, { method: "POST", body });
@@ -106,7 +114,20 @@ function ProductsTab({ token }) {
   if (!rows) return <p>Loading…</p>;
   return (
     <>
-      <button className="primary" onClick={() => setEdit({ ...EMPTY, _new: true })}>+ Add product</button>
+      <div className="row" style={{ gap: 8, marginBottom: 8 }}>
+        <button className="primary" onClick={() => setEdit({ ...EMPTY, _new: true })}>+ Add product</button>
+        <button className="ghost" onClick={() => setCsvOpen(!csvOpen)}>Upload catalogue (CSV)</button>
+      </div>
+      {csvOpen && (
+        <div className="editor" style={{ gridTemplateColumns: "1fr" }}>
+          <label>Paste CSV with a header row: id,name,category,price,stock,description,tags (new ids are added, existing ids updated)
+            <textarea rows={7} value={csv} onChange={(e) => setCsv(e.target.value)}
+              placeholder={"id,name,category,price,stock,description,tags\nAUD-201,Neckband Earphones,audio,1999,40,Magnetic neckband with 20h battery,earphones neckband sport"} />
+          </label>
+          <label>or choose a .csv file <input type="file" accept=".csv,text/csv" onChange={async (e) => { const f = e.target.files?.[0]; if (f) setCsv(await f.text()); }} /></label>
+          <div><button className="primary" disabled={!csv.trim()} onClick={importCsv}>Import</button> {csvMsg && <span className="muted">{csvMsg}</span>}</div>
+        </div>
+      )}
       {edit && (
         <div className="editor">
           {["id", "name", "category", "price", "stock", "image", "tags"].map((f) => (

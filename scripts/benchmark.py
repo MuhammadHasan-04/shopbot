@@ -8,6 +8,7 @@ import json
 import pathlib
 import statistics
 import time
+import urllib.error
 import urllib.request
 import uuid
 
@@ -18,10 +19,17 @@ PRICE_IN, PRICE_OUT = 1.0, 5.0  # USD per million tokens, Haiku-class estimate: 
 def post(base, body, timeout=90):
     req = urllib.request.Request(base.rstrip("/") + "/chat", data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json"}, method="POST")
-    t0 = time.time()
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        data = json.loads(r.read())
-    return data, time.time() - t0
+    for attempt in (1, 2):
+        t0 = time.time()
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return json.loads(r.read()), time.time() - t0
+        except urllib.error.HTTPError as e:     # 502/503 = Render deploying or waking up: wait and retry once
+            if e.code in (502, 503) and attempt == 1:
+                print("   (got", e.code, "- server restarting, retrying in 20 s)")
+                time.sleep(20)
+                continue
+            raise
 
 
 def check(exp: dict, res: dict) -> list[str]:

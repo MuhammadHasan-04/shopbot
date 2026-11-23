@@ -7,6 +7,12 @@ INJECTION = [
     r"ignore (all |any |the |your )?(previous|prior|above|earlier|system)? ?(instructions|prompts?|rules|directions)",
     r"disregard (all |any |the |your )?(previous|prior|above|system)? ?(instructions|prompts?|rules)",
     r"forget (all |your |the )?(previous |prior )?(instructions|rules|prompt)",
+    r"\bforget everything\b", r"disregard (everything|the above|all of the above)",
+    r"\b(override|bypass) (your |the )?(rules|instructions|safety|guardrails|filters?)\b",
+    r"\b(new|updated) (rules?|instructions?|system prompt)\s*:",
+    r"(repeat|print|show|reveal) (everything|all|the text) (above|before)",
+    r"\bwhat were you told\b|\byour (initial|hidden|secret) (instructions|prompt|rules)\b",
+    r"\b(no|without) (restrictions|filters|rules|limits)\b",
     r"(reveal|show|print|repeat|tell me|output|leak|display)( me)? (your|the) (system |hidden |initial |original )?(prompt|instructions|rules)",
     r"what (is|are) your (system )?(prompt|instructions)",
     r"\byou are now\b", r"\bpretend (to be|you are)\b", r"\bdeveloper mode\b", r"\bjailbreak\b", r"\bDAN\b",
@@ -27,6 +33,8 @@ OFF_TOPIC = [
     r"\b(diagnos|symptom|medicine|dosage|prescription|legal advice)\w*\b",
     r"\b(hack|crack|malware|virus|phish|exploit|ddos|keylogger)\w*\b",
     r"\b(capital of|history of the|meaning of life|who invented)\b",
+    r"\b(tell me a joke|weather (in|today|tomorrow|forecast)|what'?s the weather|translate (this|the following)|"
+    r"solve|math problem|write (an? )?(email|letter|article|blog))\b",
     r"\b(bomb|weapon|gun|drugs?|kill|suicide)\b",
 ]
 SHOP_WORDS = re.compile(
@@ -59,6 +67,9 @@ FACTS = [
     ("phone", re.compile(r"\b(?:i use|i have|my phone is)\s+(?:an?\s+)?((?:iphone|samsung|galaxy|pixel|xiaomi|redmi|oppo|vivo|infinix|tecno|realme|oneplus)[\w\s]{0,15}?)(?=[,.!?]|\s+and\b|$)", re.I)),
     ("city", re.compile(r"\b(?:i live in|i'?m from|i am from|based in)\s+([A-Z][a-zA-Z]+)", re.I)),
     ("budget", re.compile(r"\bmy budget is\s+(?:around\s+|about\s+)?(?:rs\.?|pkr)?\s*([\d,]+k?)", re.I)),
+    ("likes", re.compile(r"\bi (?:prefer|like|love|always buy|only buy|am a fan of)\s+([^.,!?]{3,50})", re.I)),
+    ("dislikes", re.compile(r"\bi (?:hate|dislike|don'?t like|do not like|avoid)\s+([^.,!?]{3,50})", re.I)),
+    ("favourite", re.compile(r"\bmy fav(?:ou?rite)? (?:brand|colou?r)\s+is\s+([^.,!?]{2,30})", re.I)),
 ]
 NOT_NAMES = {"Looking", "Interested", "Trying", "Not", "Just", "Here", "Fine", "Good", "Back", "Sorry", "Using",
              "Buying", "Going", "From", "The", "Very", "Also", "Ready", "Done", "Happy", "Okay"}
