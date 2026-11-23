@@ -1,0 +1,17 @@
+name: keep-alive
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: |
+          for i in 1 2 3; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 90 https://shopbot-agent-fm77.onrender.com/health) && [ "$code" = "200" ] && break
+            sleep 20
+          done
+          echo "API health: $code"
+          curl -s -o /dev/null -w "website: %{http_code}\n" --max-time 60 https://shopbot-web-z0m4.onrender.com/
