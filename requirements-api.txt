@@ -1,0 +1,10 @@
+# Minimal set for deploying the ShopBot API (Render). Full workshop set: requirements.txt
+langchain==1.5.0
+langchain-anthropic>=1.0
+langgraph==1.2.22
+langgraph-checkpoint-postgres>=3.0
+psycopg[binary,pool]>=3.2
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-dotenv==1.2.4
+numpy>=2.0

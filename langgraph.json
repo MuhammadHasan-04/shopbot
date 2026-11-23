@@ -1,0 +1,17 @@
+{
+  "dependencies": [
+    "."
+  ],
+  "graphs": {
+    "agent": "./app/agent.py:agent",
+    "care_team": "./app/multi_agent.py:care_team",
+    "shopbot": "./app/shop_agent.py:shopbot"
+  },
+  "env": ".env",
+  "store": {
+    "index": {
+      "embed": "./app/local_embeddings.py:aembed_texts",
+      "dims": 512
+    }
+  }
+}

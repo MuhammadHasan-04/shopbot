@@ -1,0 +1,291 @@
+{
+ "store": "TechTokri",
+ "currency": "PKR",
+ "products": [
+  {
+   "id": "AUD-101",
+   "name": "Bassline Wireless Earbuds",
+   "category": "audio",
+   "price": 4499,
+   "stock": 25,
+   "description": "Bluetooth 5.3 earbuds, 30h battery with case, IPX4 sweat resistant, touch controls.",
+   "tags": "earbuds bluetooth wireless tws budget gym",
+   "image": "🎧"
+  },
+  {
+   "id": "AUD-102",
+   "name": "Bassline Pro ANC Earbuds",
+   "category": "audio",
+   "price": 8999,
+   "stock": 12,
+   "description": "Active noise cancelling earbuds, 36h battery, wireless charging case, multipoint.",
+   "tags": "earbuds anc noise cancelling bluetooth premium",
+   "image": "🎧"
+  },
+  {
+   "id": "AUD-103",
+   "name": "StudioMax Over-Ear Headphones",
+   "category": "audio",
+   "price": 12999,
+   "stock": 8,
+   "description": "Over-ear ANC headphones, 40mm drivers, 50h battery, foldable, carry case.",
+   "tags": "headphones over-ear anc noise cancelling wireless",
+   "image": "🎧"
+  },
+  {
+   "id": "AUD-104",
+   "name": "Thump Mini Bluetooth Speaker",
+   "category": "audio",
+   "price": 3499,
+   "stock": 30,
+   "description": "Pocket speaker, 12h battery, IPX7 waterproof, 5W sound.",
+   "tags": "speaker bluetooth portable waterproof",
+   "image": "🔊"
+  },
+  {
+   "id": "AUD-105",
+   "name": "Thump Max Party Speaker",
+   "category": "audio",
+   "price": 15999,
+   "stock": 0,
+   "description": "40W party speaker with RGB lights, 20h battery, mic input.",
+   "tags": "speaker bluetooth party loud",
+   "image": "🔊"
+  },
+  {
+   "id": "AUD-106",
+   "name": "Wired Earphones with Mic",
+   "category": "audio",
+   "price": 899,
+   "stock": 60,
+   "description": "3.5mm wired earphones with in-line mic and volume control.",
+   "tags": "earphones wired cheap mic",
+   "image": "🎧"
+  },
+  {
+   "id": "CHG-201",
+   "name": "20W USB-C Fast Charger",
+   "category": "charging",
+   "price": 1999,
+   "stock": 50,
+   "description": "20W PD fast charger, works with iPhone and Android.",
+   "tags": "charger usb-c fast pd iphone android adapter",
+   "image": "🔌"
+  },
+  {
+   "id": "CHG-202",
+   "name": "65W GaN 3-Port Charger",
+   "category": "charging",
+   "price": 5999,
+   "stock": 15,
+   "description": "65W GaN charger, 2x USB-C + 1x USB-A, charges laptops and phones.",
+   "tags": "charger gan laptop usb-c fast",
+   "image": "🔌"
+  },
+  {
+   "id": "CHG-203",
+   "name": "10000mAh Power Bank",
+   "category": "charging",
+   "price": 3999,
+   "stock": 40,
+   "description": "Slim 10000mAh power bank, 22.5W fast charging, USB-C in/out.",
+   "tags": "power bank battery portable charger",
+   "image": "🔋"
+  },
+  {
+   "id": "CHG-204",
+   "name": "20000mAh Power Bank with Display",
+   "category": "charging",
+   "price": 6499,
+   "stock": 18,
+   "description": "20000mAh, LED percentage display, 3 outputs, 22.5W.",
+   "tags": "power bank battery travel large",
+   "image": "🔋"
+  },
+  {
+   "id": "CHG-205",
+   "name": "Braided USB-C to USB-C Cable 1m",
+   "category": "charging",
+   "price": 699,
+   "stock": 100,
+   "description": "60W braided USB-C cable, 1 metre. Works with iPhone 15+, Android and laptops.",
+   "tags": "cable usb-c type-c braided",
+   "image": "🧵"
+  },
+  {
+   "id": "CHG-206",
+   "name": "USB-C to Lightning Cable 1m",
+   "category": "charging",
+   "price": 999,
+   "stock": 70,
+   "description": "Fast charging cable for Lightning iPhones (iPhone 14 and older). iPhone 15 and newer use USB-C: see CHG-205.",
+   "tags": "cable lightning iphone",
+   "image": "🧵"
+  },
+  {
+   "id": "CHG-207",
+   "name": "15W Wireless Charging Pad",
+   "category": "charging",
+   "price": 2499,
+   "stock": 22,
+   "description": "Qi wireless charger, 15W, non-slip.",
+   "tags": "wireless charger qi pad",
+   "image": "🔌"
+  },
+  {
+   "id": "PHN-301",
+   "name": "Clear MagSafe Case iPhone 15",
+   "category": "phone accessories",
+   "price": 1499,
+   "stock": 35,
+   "description": "Anti-yellowing clear case with magnets for iPhone 15.",
+   "tags": "case cover iphone magsafe",
+   "image": "📱"
+  },
+  {
+   "id": "PHN-302",
+   "name": "Tempered Glass Screen Protector (2-pack)",
+   "category": "phone accessories",
+   "price": 599,
+   "stock": 120,
+   "description": "9H glass, universal sizes for popular iPhone and Samsung models.",
+   "tags": "screen protector glass",
+   "image": "📱"
+  },
+  {
+   "id": "PHN-303",
+   "name": "Car Phone Mount (Magnetic)",
+   "category": "phone accessories",
+   "price": 1299,
+   "stock": 28,
+   "description": "Dashboard/vent magnetic mount, 360° rotation.",
+   "tags": "car mount holder magnetic",
+   "image": "🚗"
+  },
+  {
+   "id": "PHN-304",
+   "name": "Selfie Stick Tripod with Remote",
+   "category": "phone accessories",
+   "price": 1799,
+   "stock": 20,
+   "description": "Extendable tripod, Bluetooth remote, for vlogging.",
+   "tags": "tripod selfie stick vlog",
+   "image": "🤳"
+  },
+  {
+   "id": "WRB-401",
+   "name": "Pulse Fit Smartwatch",
+   "category": "wearables",
+   "price": 6999,
+   "stock": 14,
+   "description": "1.8in AMOLED, heart rate, SpO2, 7-day battery, Bluetooth calling.",
+   "tags": "smartwatch watch fitness tracker calling",
+   "image": "⌚"
+  },
+  {
+   "id": "WRB-402",
+   "name": "Pulse Band Fitness Tracker",
+   "category": "wearables",
+   "price": 2999,
+   "stock": 30,
+   "description": "Step, sleep and heart-rate tracker, 14-day battery, waterproof.",
+   "tags": "fitness band tracker budget",
+   "image": "⌚"
+  },
+  {
+   "id": "HOM-501",
+   "name": "Wi-Fi Smart Plug",
+   "category": "smart home",
+   "price": 1899,
+   "stock": 40,
+   "description": "Control appliances from your phone, schedules, energy monitor.",
+   "tags": "smart plug wifi home automation",
+   "image": "🏠"
+  },
+  {
+   "id": "HOM-502",
+   "name": "1080p Wi-Fi Security Camera",
+   "category": "smart home",
+   "price": 5499,
+   "stock": 10,
+   "description": "Indoor camera, night vision, motion alerts, two-way audio.",
+   "tags": "camera cctv security wifi",
+   "image": "📷"
+  },
+  {
+   "id": "HOM-503",
+   "name": "Smart RGB LED Bulb",
+   "category": "smart home",
+   "price": 1199,
+   "stock": 45,
+   "description": "16M colours, app and voice control, 9W.",
+   "tags": "bulb light led smart rgb",
+   "image": "💡"
+  },
+  {
+   "id": "LAP-601",
+   "name": "Wireless Mouse (Silent)",
+   "category": "laptop accessories",
+   "price": 1499,
+   "stock": 38,
+   "description": "2.4GHz silent-click mouse, 18-month battery.",
+   "tags": "mouse wireless laptop",
+   "image": "🖱️"
+  },
+  {
+   "id": "LAP-602",
+   "name": "Mechanical Keyboard (Compact)",
+   "category": "laptop accessories",
+   "price": 7499,
+   "stock": 9,
+   "description": "75% layout, hot-swappable switches, RGB, USB-C.",
+   "tags": "keyboard mechanical gaming rgb",
+   "image": "⌨️"
+  },
+  {
+   "id": "LAP-603",
+   "name": "7-in-1 USB-C Hub",
+   "category": "laptop accessories",
+   "price": 4299,
+   "stock": 16,
+   "description": "HDMI 4K, 3x USB-A, SD/microSD, 100W PD pass-through.",
+   "tags": "hub usb-c dongle hdmi laptop",
+   "image": "🔗"
+  },
+  {
+   "id": "LAP-604",
+   "name": "Laptop Stand (Aluminium)",
+   "category": "laptop accessories",
+   "price": 2999,
+   "stock": 21,
+   "description": "Adjustable height, fits 10-17in laptops.",
+   "tags": "laptop stand desk",
+   "image": "💻"
+  }
+ ],
+ "policies": {
+  "shipping": "Flat PKR 250 delivery anywhere in Pakistan; FREE delivery on orders of PKR 5,000 or more. Karachi, Lahore, Islamabad/Rawalpindi: 2-3 working days. Other cities: 3-5 working days.",
+  "returns": "7-day return for unopened items in original packaging. Defective items are replaced within the warranty period. Refunds go back by bank transfer within 5 working days of receiving the item.",
+  "warranty": "Chargers, cables and power banks: 6 months. Audio, wearables, smart home and laptop accessories: 12 months.",
+  "payment": "Cash on Delivery (COD), bank transfer, JazzCash/Easypaisa, and debit/credit card on delivery.",
+  "discounts": "WELCOME10 = 10% off your first order. TECH500 = PKR 500 off orders of PKR 8,000 or more. One code per order.",
+  "contact": "WhatsApp +92 300 0000000 (10am-8pm, Mon-Sat), email support@techtokri.example.",
+  "hours": "Online orders 24/7. Support 10am-8pm, Monday to Saturday."
+ },
+ "discount_codes": {
+  "WELCOME10": {
+   "type": "percent",
+   "value": 10,
+   "min": 0,
+   "first_order_only": true
+  },
+  "TECH500": {
+   "type": "flat",
+   "value": 500,
+   "min": 8000,
+   "first_order_only": false
+  }
+ },
+ "shipping_fee": 250,
+ "free_shipping_min": 5000
+}
