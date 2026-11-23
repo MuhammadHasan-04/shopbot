@@ -1,7 +1,7 @@
 # Submission kit (Group G12, Track 1 ShopBot)
 
 ## Checklist
-- [ ] Live website URL (Vercel)
+- [ ] Live website URL (Render static site `shopbot-web`)
 - [ ] Agent API base URL (Render). `/health` returns `ok`
 - [ ] Public GitHub repo: README links filled, benchmark table, `docs/demo.gif`, `.env.example`, `tests.json`. **No `.env`, no key**
 - [ ] Demo video, 2–3 min (YouTube **Unlisted** or Drive "Anyone with the link")

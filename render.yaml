@@ -1,4 +1,4 @@
-# Render Blueprint: creates the Postgres database AND the ShopBot Agent API, already connected.
+# Render Blueprint: creates the Postgres database, the ShopBot Agent API and the website, all connected.
 # Render -> New -> Blueprint -> pick this repo. You only type ANTHROPIC_API_KEY and ADMIN_TOKEN.
 databases:
   - name: shopbot-db
@@ -31,6 +31,26 @@ services:
       - key: SESSION_SECRET
         generateValue: true
       - key: LANGSMITH_TRACING
-        value: "false"
+        value: "true"
+      - key: LANGSMITH_API_KEY
+        sync: false
+      - key: LANGSMITH_PROJECT
+        value: shopbot
       - key: CORS_ORIGINS
         value: "*"
+
+  # The website (customer store + seller dashboard) as a free Static Site. It never sleeps.
+  # NEXT_PUBLIC_AGENT_HOST is filled automatically with the API's address.
+  - type: web
+    name: shopbot-web
+    runtime: static
+    rootDir: web
+    buildCommand: npm ci && npm run build
+    staticPublishPath: out
+    autoDeploy: true
+    envVars:
+      - key: NEXT_PUBLIC_AGENT_HOST
+        fromService:
+          type: web
+          name: shopbot-agent
+          property: host

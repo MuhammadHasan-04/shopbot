@@ -8,7 +8,7 @@ TechTokri is a demo gadget shop in Pakistan, with prices in PKR. Shoppers chat w
 
 | | Link |
 |---|---|
-| Live website (Vercel) | `https://YOUR-SITE.vercel.app` |
+| Live website (Render static site) | `https://shopbot-web.onrender.com` |
 | Agent API base URL (Render) | `https://shopbot-agent.onrender.com` |
 | Demo video (2–3 min) | `https://...` |
 | Paper canvas photo | `https://...` |
@@ -21,7 +21,7 @@ TechTokri is a demo gadget shop in Pakistan, with prices in PKR. Shoppers chat w
 
 ```mermaid
 flowchart LR
-  subgraph Vercel["Vercel · Next.js website"]
+  subgraph Web["Render Static Site · Next.js website"]
     SF["Customer store page<br/>catalogue · cart · chat · my orders"]
     AD["Seller dashboard<br/>KPIs · orders · products · customers · agent activity"]
   end
@@ -107,6 +107,10 @@ flowchart LR
 - **Asks before risky actions.** `place_order` and `cancel_order` call `interrupt()`. The order is placed only when the next message is an explicit yes ("yes", "haan", "confirm", "go ahead"); anything else leaves it unplaced. This is enforced in code. On the website, checkout shows the total and needs a click on **Yes, place order**.
 - Prices, stock, discount rules and the first-order-only rule all come from the store, never from chat.
 
+## Observability (LangSmith)
+
+With `LANGSMITH_TRACING=true` and `LANGSMITH_API_KEY` set, every `/chat` turn becomes one trace (`shopbot-turn`) in the LangSmith project `shopbot`. It shows each node (guard → memory → sales_agent → tools), every tool call with its arguments and result, latency, and input/output tokens. Traces are tagged with `user_id` and `thread_id` in their metadata, so you can filter by customer or conversation. Tracing adds no Claude tokens. The seller dashboard shows the same per-turn data from our own chat log.
+
 ## Reliability and cost
 
 - `/chat` always returns the exact shape `{reply, tool_calls, tokens}`. Bad input gets a 400 or a friendly reply; errors never crash the server. One message at a time per thread (lock). The Postgres pool health-checks connections (hosted Postgres closes idle ones).
@@ -189,11 +193,11 @@ app/shop_tools.py      12 tools + store helpers (catalogue, carts, orders, memor
 app/shop_safety.py     guard rules + rule-based fact capture
 app/api.py             FastAPI: /chat /health + website and admin endpoints
 data/products.json     demo catalogue, policies, discount codes
-web/                   Next.js store page + seller dashboard (Vercel)
+web/                   Next.js store page + seller dashboard (static export; Render Static Site or Vercel)
 tests/                 pytest (tools, agent, API) - free, scripted model
 tests.json             10 test cases + 5 attack tests
 scripts/benchmark.py   runs tests.json against the live API
-render.yaml            Render deploy (API + Postgres database)
+render.yaml            Render deploy: Postgres + API + website in one Blueprint
 app/agent.py, notebooks/ ...   the original workshop care-chatbot (see WORKSHOP_README.md)
 ```
 

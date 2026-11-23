@@ -1,6 +1,8 @@
 "use client";
 
-export const API = (process.env.NEXT_PUBLIC_AGENT_URL || "http://localhost:7860").replace(/\/$/, "");
+// Agent API address. On Render, render.yaml fills NEXT_PUBLIC_AGENT_HOST automatically from the API service.
+const HOST = process.env.NEXT_PUBLIC_AGENT_HOST;
+export const API = (process.env.NEXT_PUBLIC_AGENT_URL || (HOST ? `https://${HOST}` : "http://localhost:8000")).replace(/\/$/, "");
 
 function store() {
   try { return window.localStorage; } catch { return null; }

@@ -1,6 +1,6 @@
-# Deploy guide: GitHub → Render (API + PostgreSQL) → Vercel (about 30 minutes)
+# Deploy guide: GitHub → Render (PostgreSQL + API + website) (about 20 minutes)
 
-You need free accounts on **GitHub**, **Render** and **Vercel**. Sign in to Render and Vercel with GitHub.
+You need free accounts on **GitHub** and **Render** (sign in to Render with GitHub). Vercel is optional.
 The database is a **PostgreSQL** database that Render creates for you from `render.yaml`. No separate database website is needed.
 
 ## 0. Check the key is safe, then push to GitHub
@@ -21,16 +21,18 @@ git branch -M main
 git push -u origin main
 ```
 
-## 1. Render: PostgreSQL + agent API in one go
+## 1. Render: PostgreSQL + agent API + website in one go
 1. https://dashboard.render.com → **New + → Blueprint** → pick your repo.
-2. Render reads `render.yaml` and shows **two** things to create:
+2. Render reads `render.yaml` and shows **three** things to create:
    - `shopbot-db`: a free **PostgreSQL** database
-   - `shopbot-agent`: the web service, with `DATABASE_URL` already wired to that database
+   - `shopbot-agent`: the agent API, with `DATABASE_URL` already wired to that database
+   - `shopbot-web`: the website (Static Site), already pointed at the API
 3. It asks for 2 values:
    | Name | Value |
    |---|---|
    | `ANTHROPIC_API_KEY` | your group key |
    | `ADMIN_TOKEN` | a password you choose for the seller dashboard |
+   | `LANGSMITH_API_KEY` | your LangSmith key (optional, for tracing) |
 4. **Apply**. The database is ready in about 1 minute and the API build takes about 3–5 minutes. Tables are created automatically on first start.
 5. Test it, using your service URL from the top of the `shopbot-agent` page:
    - Browser: `https://shopbot-agent.onrender.com/health` → `ok`
@@ -50,8 +52,8 @@ git push -u origin main
 - Hosted databases outside Render usually need `?sslmode=require` at the end of the URL.
 - The brief names "Supabase or Neon"; if your instructor insists on those, use one of them the same way.
 
-## 2. Vercel (website)
-1. https://vercel.com/new → import the same repo.
+## 2. (Optional) Vercel instead of Render for the website
+Only if you prefer Vercel for the website: https://vercel.com/new → import the same repo.
 2. **Root Directory → `web`** (click Edit). Framework: Next.js.
 3. Environment variable: `NEXT_PUBLIC_AGENT_URL` = your Render API URL (no trailing `/`).
 4. **Deploy** → `https://your-project.vercel.app`. The seller dashboard is at `/admin` (password = `ADMIN_TOKEN`).

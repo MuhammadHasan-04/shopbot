@@ -165,7 +165,10 @@ def chat(graph, user_id: str, thread_id: str, message: str, role: str = "custome
     """One customer message in, one reply out. If an order is waiting for approval in this thread,
     the message is the customer's answer and resumes it (yes = place, anything else = don't)."""
     from langgraph.types import Command
-    config = {"configurable": {"thread_id": f"{user_id}::{thread_id}"}}   # user_id in the key = isolation
+    config = {"configurable": {"thread_id": f"{user_id}::{thread_id}"},   # user_id in the key = isolation
+              # LangSmith (when LANGSMITH_TRACING=true): one trace per turn, filterable by customer and chat
+              "run_name": "shopbot-turn", "tags": ["shopbot", role],
+              "metadata": {"user_id": user_id, "thread_id": thread_id}}
     ctx = ShopContext(user_id=user_id, role=role)
     before = graph.get_state(config)
     since = len(before.values.get("messages", [])) if before.values else 0
