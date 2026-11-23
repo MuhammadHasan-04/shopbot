@@ -8,10 +8,10 @@ TechTokri is a demo gadget shop in Pakistan, with prices in PKR. Shoppers chat w
 
 | | Link |
 |---|---|
-| Live website (Render static site) | `https://shopbot-web.onrender.com` |
-| Agent API base URL (Render) | `https://shopbot-agent.onrender.com` |
-| Demo video (2–3 min) | `https://...` |
-| Paper canvas photo | `https://...` |
+| Live website | https://shopbot-web-z0m4.onrender.com |
+| Agent API base URL | https://shopbot-agent-fm77.onrender.com |
+| Demo video (2–3 min) | _add link_ |
+| Paper canvas photo | _add link_ |
 
 ![demo](docs/demo.gif)
 

@@ -1,5 +1,12 @@
 # Submission kit (Group G12, Track 1 ShopBot)
 
+## Our links
+- Website: https://shopbot-web-z0m4.onrender.com
+- Agent API base URL: https://shopbot-agent-fm77.onrender.com
+- GitHub: https://github.com/MuhammadHasan-04/shopbot
+- Demo video: _add_
+- Canvas photo: _add_
+
 ## Checklist
 - [ ] Live website URL (Render static site `shopbot-web`)
 - [ ] Agent API base URL (Render). `/health` returns `ok`
